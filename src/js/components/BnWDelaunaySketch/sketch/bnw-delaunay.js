@@ -4,10 +4,11 @@ const bnwDelaunaySketch = p => {
 
 	let sourceImage
 	let delaunayImage
-	
+	let threshold
+
 	let points
 	let delaunay
-	const limit = 5000
+	const limit = 2000
 	let animation = false
 	let increment = 1
 	let step = 0
@@ -31,13 +32,17 @@ const bnwDelaunaySketch = p => {
 				save()
 			break
 			case "DISPLAY_SKETCH":
-				loadNewImage(config.link)
+				loadNewImage(config.link, config.threshold)
 			break
 			case "ANIMATE":
 				animate()
 			break
 			case "DELAUNAY":
+				console.log("HUH")
 				toDelaunay()
+			break
+			case "MODIFY_THRESHOLD":
+				updateThreshold(config.threshold)
 			break
 		}
 	}
@@ -53,16 +58,22 @@ const bnwDelaunaySketch = p => {
 	}
 
 	const save = () => {
-		p.saveCanvas(delaunayImage, 'colored-delaunay.png')
+		p.saveCanvas(delaunayImage, 'bnw-delaunay.png')
 	}
 
-	const loadNewImage = source => {
+	const loadNewImage = (source, t) => {
+		threshold = t
 		sourceImage = p.loadImage( source, displayNewImage)
 	}
 
 	const toDelaunay = () => {
 		points = []
 		addToDelaunayPointList(limit)
+	}
+
+	const updateThreshold = (v) => {
+		threshold = v
+		displayNewImage()
 	}
 
 	const displayNewImage = () => {
@@ -72,6 +83,10 @@ const bnwDelaunaySketch = p => {
 
 		delaunayImage = p.createGraphics(newWidth, newHeight)
 		delaunayImage.image(sourceImage, 0, 0, newWidth, newHeight)
+		//delaunayImage.filter(p.THRESHOLD, threshold)
+		delaunayImage.filter(p.GRAY)
+		delaunayImage.filter(p.POSTERIZE, 32)
+		delaunayImage.filter(p.THRESHOLD, threshold)
 		delaunayImage.loadPixels()
 		displayDelaunay()
 	}
@@ -101,11 +116,17 @@ const bnwDelaunaySketch = p => {
 	}
 
 	const addToDelaunayPointList = amount => {
-		let x, y
+		let x, y, pix
+		const d = delaunayImage.pixelDensity()
 		for(let i = 0; i < amount; i++){
 			x = Math.floor(Math.random() * delaunayImage.width-1)
 			y = Math.floor(Math.random() * delaunayImage.height-1)
-			points.push([x, y])
+			
+			pix = (y * delaunayImage.width * d + x) * 4 * d
+			if(delaunayImage.pixels[pix] === 255)
+				points.push([x, y])
+			else 
+				i--
 		}
 		delaunay = Delaunator.from(points)
 		
@@ -133,8 +154,7 @@ const bnwDelaunaySketch = p => {
 				pix = (yy * canvas.width * d + xx) * 4 * d
 
 				if(yy==-1) continue
-				canvas.fill(canvas.pixels[pix], canvas.pixels[pix+1], canvas.pixels[pix+2])
-				canvas.stroke(canvas.pixels[pix], canvas.pixels[pix+1], canvas.pixels[pix+2])
+
 				canvas.triangle(
 					triangle[0][0], triangle[0][1], 
 					triangle[1][0], triangle[1][1], 
@@ -144,6 +164,8 @@ const bnwDelaunaySketch = p => {
 		}
 
 		canvas.clear()
+		canvas.noFill()
+		canvas.stroke(255)
 		forEachTriangle(points, delaunay)
 	}
 }
