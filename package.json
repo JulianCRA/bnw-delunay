@@ -1,6 +1,6 @@
 {
-  "name": "color-delaunay",
-  "version": "4.0.0",
+  "name": "bnw-delaunay",
+  "version": "3.0.0",
   "description": "Simple image manipulation using Delaunay triangulation",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/JulianCRA/color-delaunay.git"
+    "url": "git+https://github.com/JulianCRA/bnw-delaunay.git"
   },
   "keywords": [
     "delaunay",
@@ -20,9 +20,9 @@
   "author": "Julian R.",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/JulianCRA/color-delaunay/issues"
+    "url": "https://github.com/JulianCRA/bnw-delaunay/issues"
   },
-  "homepage": "https://github.com/JulianCRA/color-delaunay#readme",
+  "homepage": "https://github.com/JulianCRA/bnw-delaunay#readme",
   "devDependencies": {
     "@babel/core": "^7.7.2",
     "@babel/plugin-proposal-class-properties": "^7.7.0",

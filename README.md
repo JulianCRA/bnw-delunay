@@ -1,1 +1,1 @@
-# color-delaunay
+# bnw-delaunay
