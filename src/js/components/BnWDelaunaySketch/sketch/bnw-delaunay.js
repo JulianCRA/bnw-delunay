@@ -26,7 +26,6 @@ const bnwDelaunaySketch = p => {
 	}
 
 	p.customRedraw = (config) => {
-		console.log('config', config)
 		switch(config.action){
 			case "SAVE":
 				save()
@@ -38,7 +37,6 @@ const bnwDelaunaySketch = p => {
 				animate()
 			break
 			case "DELAUNAY":
-				console.log("HUH")
 				toDelaunay()
 			break
 			case "MODIFY_THRESHOLD":
