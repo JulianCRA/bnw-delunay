@@ -10,6 +10,7 @@ const BnWDelaunay = () => {
 	const [config, setConfig] = React.useState({
 		action: actions._DISPLAY_READER,
 		link: null,
+		threshold: 0.5,
 		openMenu: false
 	})
 
@@ -26,6 +27,7 @@ const BnWDelaunay = () => {
 				...config, 
 				link : a.action === actions._DISPLAY_READER ? null : config.link,
 				openMenu : a.action === actions._DISPLAY_READER,
+				threshold : a.value || config.threshold,
 				action: a.action
 			})
 		}

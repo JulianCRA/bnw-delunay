@@ -17,11 +17,22 @@ const BnWDelaunayMenu = ({update}) => {
 
 	const elements = [
 		{
+			type : "range",
+			label : "THRESHOLD",
+			//image : animationImage,
+			min : 0,
+			max : 1,
+			step : 0.025,
+			value : 0.5,
+			small : height < 500,
+			action : value => update({action: actions._MODIFY_THRESHOLD, value: value})
+		},
+		{
 			type : "button",
 			tooltip : "Save the mosaic image to a file.",
 			label : "SAVE",
 			image : downloadImage,
-			small : height < 400,
+			small : height < 500,
 			action : () => update({action : actions._SAVE})
 		},
 		{
@@ -29,7 +40,7 @@ const BnWDelaunayMenu = ({update}) => {
 			tooltip : "Load another image.",
 			label : "LOAD",
 			image : loadImage,
-			small : height < 400,
+			small : height < 500,
 			action : () => update({action : actions._DISPLAY_READER})
 		},
 		{
@@ -37,14 +48,14 @@ const BnWDelaunayMenu = ({update}) => {
 			tooltip : "Watch as the triangles are placed progressively.",
 			label : "ANIMATE",
 			image : animationImage,
-			small : height < 400,
+			small : height < 500,
 			action : () => update({action : actions._ANIMATE})
 		},
 		{
 			type : "button",
 			label : "GO!",
 			image : trianglesImage,
-			small : height < 400,
+			small : height < 500,
 			action : () => update({action : actions._DELAUNAY})
 		}
 	]

@@ -25,6 +25,7 @@ const bnwDelaunaySketch = p => {
 	}
 
 	p.customRedraw = (config) => {
+		console.log('config', config)
 		switch(config.action){
 			case "SAVE":
 				save()
